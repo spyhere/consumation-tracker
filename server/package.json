@@ -1,0 +1,11 @@
+{
+  "name": "calory-app-backend",
+  "version": "1.0.0",
+  "description": "This is a backend for Toptal's test project \"Simple Calory App\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "spyhere",
+  "license": "ISC"
+}
