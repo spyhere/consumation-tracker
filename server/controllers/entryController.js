@@ -24,13 +24,13 @@ class EntryController {
         createdAt: 'desc'
       }
     })
-    res.send({ data: entries, meta: { cursor: entries[entries.length-1].id } })
+    res.send({ data: entries, meta: { cursor: entries[entries.length - 1].id } })
   }
 
   static async store(req, res) {
-    const isValid = createEntryRequest(req.body)
-    if (!!isValid) {
-      return res.status(isValid[0]).send(isValid[1])
+    const hasErrors = createEntryRequest(req.body)
+    if (!!hasErrors) {
+      return res.status(hasErrors[0]).send(hasErrors[1])
     }
 
     const user_id = req.user.id
@@ -49,9 +49,9 @@ class EntryController {
   }
 
   static async update(req, res) {
-    const isValid = createEntryRequest(req.body)
-    if (!!isValid) {
-      return res.status(isValid[0]).send(isValid[1])
+    const hasErrors = createEntryRequest(req.body)
+    if (!!hasErrors) {
+      return res.status(hasErrors[0]).send(hasErrors[1])
     }
 
     const { calories, food, price } = req.body
