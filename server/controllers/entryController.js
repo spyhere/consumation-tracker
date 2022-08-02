@@ -23,7 +23,7 @@ class EntryController {
         createdAt: 'desc'
       }
     })
-    res.send({ entries })
+    res.send({ data: entries, meta: { cursor: entries[entries.length-1].id } })
   }
 
   static async store(req, res) {
