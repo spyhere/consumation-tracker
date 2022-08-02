@@ -1,5 +1,7 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
+const aliceEntries = require("./aliceEntries")
+const bobEntries = require("./bobEntries")
 
 async function main() {
   const alice = await prisma.user.upsert({
@@ -8,11 +10,7 @@ async function main() {
     create: {
       name: 'Alice',
       Entry: {
-        create: {
-          calories: 500,
-          food: 'burger',
-          price: 5.00,
-        },
+        createMany: { data: aliceEntries },
       },
     },
   })
@@ -24,11 +22,7 @@ async function main() {
       name: 'Bob',
       role: 'ADMIN',
       Entry: {
-        create: {
-          calories: 500,
-          food: 'pizza',
-          price: 10.00,
-        },
+        createMany: { data: bobEntries },
       },
     },
   })
