@@ -78,12 +78,30 @@ class EntryController {
     const user_id = req.user.id
     const { calories, food, price } = req.body
 
+    const daytime = new Date().toISOString().split("T")[0]
     const newEntry = await prisma.entry.create({
       data: {
         calories: Number(calories),
         food,
         price: Number(price) || 0,
-        user_id: Number(user_id),
+        User: {
+          connect: {
+            id: Number(user_id)
+          }
+        },
+        Day: {
+          connectOrCreate: {
+            where: {
+              daytime
+            },
+            create: {
+              daytime
+            }
+          }
+        },
+      },
+      include: {
+        Day: true
       }
     })
 
