@@ -28,5 +28,5 @@ model Entry {
     createdAt DateTime @default(now())
     updatedAt DateTime?
     user_id Int
-    User User @relation(fields: [user_id], references: [id])
+    User User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
