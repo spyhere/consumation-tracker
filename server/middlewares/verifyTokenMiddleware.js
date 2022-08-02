@@ -9,6 +9,9 @@ const verifyTokenMiddleware = (req, res, next) => {
 
   try {
     req.user = jwt.decode(token, process.env.TOKEN)
+    if (!req.user) {
+      throw new Error()
+    }
   } catch (e) {
     return res.status(401).send("Invalid token")
   }
