@@ -7,26 +7,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 enum Role {
-    ADMIN
-    CUSTOMER
+  ADMIN
+  CUSTOMER
 }
 
 model User {
-    id Int @id @default(autoincrement())
-    name String @unique
-    role Role @default(CUSTOMER)
-    Entry Entry[]
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  role  Role    @default(CUSTOMER)
+  Entry Entry[]
 }
 
 model Entry {
-    id Int @id @default(autoincrement())
-    calories Int
-    food String
-    price Decimal
-    createdAt DateTime @default(now())
-    updatedAt DateTime?
-    user_id Int
-    User User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  id        Int       @id @default(autoincrement())
+  calories  Int
+  food      String
+  price     Decimal
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  user_id   Int
+  User      User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  day_id    Int
+  Day       Day       @relation(fields: [day_id], references: [id], onDelete: Cascade)
+}
+
+model Day {
+  id      Int     @id @default(autoincrement())
+  daytime String
+  Entry   Entry[]
 }
