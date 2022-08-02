@@ -14,17 +14,52 @@ class EntryController {
     } : {}
 
     const userId = req.user.id
-    const entries = await prisma.entry.findMany({
-      take: 5,
-      ...cursor,
-      where: {
-        user_id: userId
-      },
-      orderBy: {
-        createdAt: 'desc'
-      }
+    const monthStart = new Date(new Date().setDate(1))
+    const dayStart = new Date(new Date().setHours(0, 0, 0, 0))
+
+    const [entries, spent, caloriesSum] = await prisma.$transaction([
+      prisma.entry.findMany({
+        take: 5,
+        ...cursor,
+        where: {
+          user_id: userId
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      }),
+
+      prisma.entry.aggregate({
+        _sum: {
+          price: true,
+        },
+        where: {
+          user_id: userId,
+          createdAt: {
+            lte: new Date(),
+            gte: monthStart,
+          },
+        }
+      }),
+
+      prisma.entry.aggregate({
+        _sum: {
+          calories: true
+        },
+        where: {
+          user_id: userId,
+          createdAt: {
+            gte: dayStart,
+          }
+        }
+
+      })
+    ])
+
+    res.send({
+      data: { entries, spent: spent._sum.price, calories: caloriesSum._sum.calories },
+      meta: { cursor: entries[entries.length - 1].id }
     })
-    res.send({ data: entries, meta: { cursor: entries[entries.length - 1].id } })
   }
 
   static async store(req, res) {
