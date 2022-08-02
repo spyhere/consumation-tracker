@@ -17,15 +17,22 @@ class EntryController {
     const monthStart = new Date(new Date().setDate(1))
     const dayStart = new Date(new Date().setHours(0, 0, 0, 0))
 
-    const [entries, spent, caloriesSum] = await prisma.$transaction([
-      prisma.entry.findMany({
-        take: 5,
+    const [dates, spent, caloriesSum] = await prisma.$transaction([
+      prisma.day.findMany({
+        take: Number(process.env.ENTRIES_PAGINATION),
         ...cursor,
-        where: {
-          user_id: userId
+        include: {
+          Entry: {
+            where: {
+              user_id: userId
+            },
+            orderBy: {
+              createdAt: 'desc'
+            },
+          }
         },
         orderBy: {
-          createdAt: 'desc'
+          daytime: 'desc'
         }
       }),
 
@@ -57,8 +64,8 @@ class EntryController {
     ])
 
     res.send({
-      data: { entries, spent: spent._sum.price, calories: caloriesSum._sum.calories },
-      meta: { cursor: entries[entries.length - 1].id }
+      data: { dates, spent: spent._sum.price, calories: caloriesSum._sum.calories },
+      meta: { cursor: dates[dates.length - 1].id }
     })
   }
 
