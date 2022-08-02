@@ -74,7 +74,16 @@ class EntryController {
   }
 
   static async destroy(req, res) {
-    //
+    const entryId = Number(req.params.entry)
+
+    try {
+      await prisma.entry.delete({
+        where: { id: entryId }
+      })
+      res.send()
+    } catch (e) {
+      res.status(400).send(e.message)
+    }
   }
 }
 
