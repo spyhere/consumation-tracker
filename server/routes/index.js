@@ -1,8 +1,10 @@
 require("express-group-routes")
 const express = require("express")
 const router = express()
-const authController = require("../controllers/authController")
+const UserController = require("../controllers/userController")
 
-router.use("/auth", authController)
+router.group("/users", (router) => {
+  router.get("/", UserController.index)
+})
 
 module.exports = router
