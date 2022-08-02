@@ -12,6 +12,12 @@ const entries = [
     price: 25.00,
   },
   {
+    calories: 270,
+    createdAt: '2022-07-31T19:14:31.927Z',
+    food: 'milk',
+    price: 10.50,
+  },
+  {
     calories: 50,
     createdAt: '2022-07-30T21:12:31.927Z',
     food: 'apple',
