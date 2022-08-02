@@ -40,7 +40,7 @@ class EntryController {
       data: {
         calories: Number(calories),
         food,
-        price: Number(price),
+        price: Number(price) || 0,
         user_id: Number(user_id),
       }
     })
@@ -63,7 +63,7 @@ class EntryController {
         data: {
           calories: Number(calories),
           food,
-          price: Number(price),
+          price: Number(price) || 0,
           updatedAt: new Date()
         }
       })
