@@ -49,7 +49,28 @@ class EntryController {
   }
 
   static async update(req, res) {
-    //
+    const isValid = createEntryRequest(req.body)
+    if (!!isValid) {
+      return res.status(isValid[0]).send(isValid[1])
+    }
+
+    const { calories, food, price } = req.body
+    const entryId = Number(req.params.entry)
+
+    try {
+      const entry = await prisma.entry.update({
+        where: { id: entryId },
+        data: {
+          calories: Number(calories),
+          food,
+          price: Number(price),
+          updatedAt: new Date()
+        }
+      })
+      res.send({ data: entry })
+    } catch (e) {
+      res.status(400).send(e.message)
+    }
   }
 
   static async destroy(req, res) {
