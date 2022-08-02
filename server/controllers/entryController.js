@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client")
+const createEntryRequest = require("../requests/createEntryRequests")
 
 const prisma = new PrismaClient()
 
@@ -27,7 +28,24 @@ class EntryController {
   }
 
   static async store(req, res) {
-    //
+    const isValid = createEntryRequest(req.body)
+    if (!!isValid) {
+      return res.status(isValid[0]).send(isValid[1])
+    }
+
+    const user_id = req.user.id
+    const { calories, food, price } = req.body
+
+    const newEntry = await prisma.entry.create({
+      data: {
+        calories: Number(calories),
+        food,
+        price: Number(price),
+        user_id: Number(user_id),
+      }
+    })
+
+    res.status(201).send({ data: newEntry })
   }
 
   static async update(req, res) {

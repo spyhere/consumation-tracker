@@ -15,6 +15,7 @@ router.group("/users", (router) => {
 
 router.group("/entries", (router) => {
   router.get("/", EntryController.index)
+  router.post("/", EntryController.store)
 })
 
 module.exports = router
