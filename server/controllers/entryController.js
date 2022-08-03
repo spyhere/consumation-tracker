@@ -6,32 +6,44 @@ const prisma = new PrismaClient()
 class EntryController {
 
   static async index(req, res) {
-    const cursor = req.query.cursor ? {
-      skip: 1,
-      cursor: {
-        id: Number(req.query.cursor)
+    let query = { take: Number(process.env.ENTRIES_PAGINATION) }
+    if (req.query.cursor) {
+      query = {
+        take: Number(process.env.ENTRIES_PAGINATION),
+        skip: 1,
+        cursor: {
+          id: Number(req.query.cursor),
+        }
       }
-    } : {}
+    } else if (req.query.from) {
+      query = {
+        where: {
+          daytime: {
+            lte: req.query.to || new Date(),
+            gte: req.query.from,
+          }
+        }
+      }
+    }
 
     const userId = req.user.id
 
     const dates = await prisma.day.findMany({
-        take: Number(process.env.ENTRIES_PAGINATION),
-        ...cursor,
-        include: {
-          Entry: {
-            where: {
-              user_id: userId
-            },
-            orderBy: {
-              createdAt: 'desc'
-            },
-          }
-        },
-        orderBy: {
-          daytime: 'desc'
+      ...query,
+      include: {
+        Entry: {
+          where: {
+            user_id: userId
+          },
+          orderBy: {
+            createdAt: 'desc'
+          },
         }
-      })
+      },
+      orderBy: {
+        daytime: 'desc'
+      }
+    })
 
     res.send({
       data: { dates },
