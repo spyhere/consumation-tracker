@@ -17,6 +17,7 @@ model User {
   name  String  @unique
   role  Role    @default(CUSTOMER)
   Entry Entry[]
+  Day   Day[]
 }
 
 model Entry {
@@ -36,4 +37,5 @@ model Day {
   id      Int     @id @default(autoincrement())
   daytime String  @unique
   Entry   Entry[]
+  User    User[]
 }

@@ -10,26 +10,39 @@ async function main() {
 
   for (const entry of aliceEntries) {
     const daytime = entry.createdAt.split('T')[0]
-    await prisma.user.update({
-      where: { name: alice.name },
-      data: {
+    await prisma.day.upsert({
+      where: { daytime },
+      create: {
+        daytime,
         Entry: {
           create: {
             calories: entry.calories,
             food: entry.food,
             price: entry.price,
             createdAt: entry.createdAt,
-            Day: {
-              connectOrCreate: {
-                where: {
-                  daytime
-                },
-                create: {
-                  daytime
-                }
-              }
+            User: {
+              connect: { id: alice.id }
             }
           }
+        },
+        User: {
+          connect: { id: alice.id }
+        }
+      },
+      update: {
+        Entry: {
+          create: {
+            calories: entry.calories,
+            food: entry.food,
+            price: entry.price,
+            createdAt: entry.createdAt,
+            User: {
+              connect: { id: alice.id }
+            }
+          }
+        },
+        User: {
+          connect: { id: alice.id }
         }
       }
     })
@@ -41,26 +54,39 @@ async function main() {
 
   for (const entry of bobEntries) {
     const daytime = entry.createdAt.split('T')[0]
-    await prisma.user.update({
-      where: { name: bob.name },
-      data: {
+    await prisma.day.upsert({
+      where: { daytime },
+      create: {
+        daytime,
         Entry: {
           create: {
             calories: entry.calories,
             food: entry.food,
             price: entry.price,
             createdAt: entry.createdAt,
-            Day: {
-              connectOrCreate: {
-                where: {
-                  daytime
-                },
-                create: {
-                  daytime
-                }
-              }
+            User: {
+              connect: { id: bob.id }
             }
           }
+        },
+        User: {
+          connect: { id: bob.id }
+        }
+      },
+      update: {
+        Entry: {
+          create: {
+            calories: entry.calories,
+            food: entry.food,
+            price: entry.price,
+            createdAt: entry.createdAt,
+            User: {
+              connect: { id: bob.id }
+            }
+          }
+        },
+        User: {
+          connect: { id: bob.id }
         }
       }
     })
