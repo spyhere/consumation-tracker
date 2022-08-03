@@ -8,7 +8,7 @@ class UserController {
     const currentWeekEnd = new Date(Date.now() - 6 * 24 * 60 * 60 * 1000)
     const lastWeekEnd = new Date(Date.now() - 13 * 24 * 60 * 60 * 1000)
 
-    const [users, previousTransactions] = await prisma.$transaction([
+    const [users, previousEntries] = await prisma.$transaction([
       prisma.user.findMany({
         select: {
           id: true,
@@ -39,7 +39,7 @@ class UserController {
       const currentWeekEntries = it.Entry.length
       const currentWeekCaloriesSum = it.Entry.reduce((acc, next) => acc + next.calories, 0)
       const averageCalories = ((currentWeekCaloriesSum * 1000) / currentWeekEntries) / 1000
-      const previousWeekEntries = previousTransactions.find(transaction => transaction.user_id === it.id)?._count || 0
+      const previousWeekEntries = previousEntries.find(entry => entry.user_id === it.id)?._count || 0
 
       const user = { ...it }
       delete user.Entry
