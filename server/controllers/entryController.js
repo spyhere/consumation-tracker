@@ -9,7 +9,7 @@ class EntryController {
     const userId = req.user.id
     const takeLimit = Number(process.env.ENTRIES_PAGINATION)
 
-    const dates = await prisma.day.findMany({
+    const result = await prisma.day.findMany({
       take: takeLimit + 1,
       ...req.query.cursor && {
         cursor: {
@@ -28,6 +28,14 @@ class EntryController {
       },
       orderBy: {
         daytime: 'desc'
+      }
+    })
+
+    const dates = result.map(it => {
+      const sum = it.Entry.reduce((acc, next) => acc + next.calories, 0)
+      return {
+        ...it,
+        consumed: sum,
       }
     })
 
