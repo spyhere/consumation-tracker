@@ -21,6 +21,13 @@ class EntryController {
           id: Number(req.query.cursor),
         },
       },
+      where: {
+        User: {
+          some: {
+            id: userId
+          }
+        }
+      },
       include: {
         Entry: {
           where: {
@@ -64,6 +71,11 @@ class EntryController {
 
     const dates = await prisma.day.findMany({
       where: {
+        User: {
+          some: {
+            id: userId
+          }
+        },
         daytime: {
           lte: toDate,
           gte: fromDate,
