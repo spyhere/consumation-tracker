@@ -14,11 +14,8 @@ class EntryController {
     } : {}
 
     const userId = req.user.id
-    const monthStart = new Date(new Date().setDate(1))
-    const dayStart = new Date(new Date().setHours(0, 0, 0, 0))
 
-    const [dates, spent, caloriesSum] = await prisma.$transaction([
-      prisma.day.findMany({
+    const dates = await prisma.day.findMany({
         take: Number(process.env.ENTRIES_PAGINATION),
         ...cursor,
         include: {
@@ -34,37 +31,10 @@ class EntryController {
         orderBy: {
           daytime: 'desc'
         }
-      }),
-
-      prisma.entry.aggregate({
-        _sum: {
-          price: true,
-        },
-        where: {
-          user_id: userId,
-          createdAt: {
-            lte: new Date(),
-            gte: monthStart,
-          },
-        }
-      }),
-
-      prisma.entry.aggregate({
-        _sum: {
-          calories: true
-        },
-        where: {
-          user_id: userId,
-          createdAt: {
-            gte: dayStart,
-          }
-        }
-
       })
-    ])
 
     res.send({
-      data: { dates, spent: spent._sum.price, calories: caloriesSum._sum.calories },
+      data: { dates },
       meta: { cursor: dates[dates.length - 1].id }
     })
   }
@@ -144,6 +114,45 @@ class EntryController {
     } catch (e) {
       res.status(400).send(e.message)
     }
+  }
+
+  static async getStats(req, res) {
+    const userId = req.user.id
+    const monthStart = new Date(new Date().setDate(1))
+    const dayStart = new Date(new Date().setHours(0, 0, 0, 0))
+
+    const [monthMoneySpent, dayCalories] = await prisma.$transaction([
+      prisma.entry.aggregate({
+        _sum: {
+          price: true,
+        },
+        where: {
+          user_id: userId,
+          createdAt: {
+            lte: new Date(),
+            gte: monthStart,
+          },
+        }
+      }),
+      prisma.entry.aggregate({
+        _sum: {
+          calories: true
+        },
+        where: {
+          user_id: userId,
+          createdAt: {
+            gte: dayStart,
+          }
+        }
+      })
+    ])
+
+    res.send({
+      data: {
+        monthMoneySpent: monthMoneySpent._sum.price,
+        dayCalories: dayCalories._sum.calories
+      }
+    })
   }
 }
 
