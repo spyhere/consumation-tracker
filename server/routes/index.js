@@ -15,6 +15,7 @@ router.group("/users", (router) => {
 
 router.group("/entries", (router) => {
   router.get("/", EntryController.index)
+  router.get("/by-dates", EntryController.filterEntriesByDates)
   router.post("/", EntryController.store)
   router.put("/:entry", isAdminMiddleware, EntryController.update)
   router.delete("/:entry", isAdminMiddleware, EntryController.destroy)

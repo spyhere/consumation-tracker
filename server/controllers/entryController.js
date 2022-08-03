@@ -6,30 +6,56 @@ const prisma = new PrismaClient()
 class EntryController {
 
   static async index(req, res) {
-    let query = { take: Number(process.env.ENTRIES_PAGINATION) }
-    if (req.query.cursor) {
-      query = {
-        take: Number(process.env.ENTRIES_PAGINATION),
-        skip: 1,
-        cursor: {
-          id: Number(req.query.cursor),
-        }
-      }
-    } else if (req.query.from) {
-      query = {
-        where: {
-          daytime: {
-            lte: req.query.to || new Date(),
-            gte: req.query.from,
-          }
-        }
-      }
-    }
-
     const userId = req.user.id
+    const takeLimit = Number(process.env.ENTRIES_PAGINATION)
 
     const dates = await prisma.day.findMany({
-      ...query,
+      take: takeLimit + 1,
+      ...req.query.cursor && {
+        cursor: {
+          id: Number(req.query.cursor),
+        },
+      },
+      include: {
+        Entry: {
+          where: {
+            user_id: userId
+          },
+          orderBy: {
+            createdAt: 'desc'
+          },
+        }
+      },
+      orderBy: {
+        daytime: 'desc'
+      }
+    })
+
+    let cursor
+    if (dates.length > takeLimit) {
+      cursor = dates.pop()?.id || null
+    } else {
+      cursor = null
+    }
+
+    res.send({
+      data: { dates },
+      meta: { cursor }
+    })
+  }
+
+  static async filterEntriesByDates(req, res) {
+    const userId = req.user.id
+    const toDate = req.query.to || new Date()
+    const fromDate = req.query.from
+
+    const dates = await prisma.day.findMany({
+      where: {
+        daytime: {
+          lte: toDate,
+          gte: fromDate,
+        }
+      },
       include: {
         Entry: {
           where: {
@@ -47,7 +73,6 @@ class EntryController {
 
     res.send({
       data: { dates },
-      meta: { cursor: dates[dates.length - 1]?.id || null }
     })
   }
 
