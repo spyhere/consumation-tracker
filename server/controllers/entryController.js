@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client")
 const isAdmin = require('../helpers/isAdmin')
 const createEntryRequest = require("../requests/createEntryRequests")
+const EntryService = require("../services/entryService")
 
 const prisma = new PrismaClient()
 
@@ -43,13 +44,7 @@ class EntryController {
       }
     })
 
-    const dates = result.map(it => {
-      const sum = it.Entry.reduce((acc, next) => acc + next.calories, 0)
-      return {
-        ...it,
-        consumed: sum,
-      }
-    })
+    const dates = EntryService.addCaloriesCountPerDay(result)
 
     let cursor
     if (dates.length > takeLimit) {
