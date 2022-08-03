@@ -35,7 +35,7 @@ class EntryController {
 
     res.send({
       data: { dates },
-      meta: { cursor: dates[dates.length - 1].id }
+      meta: { cursor: dates[dates.length - 1]?.id || null }
     })
   }
 
