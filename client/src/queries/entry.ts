@@ -10,3 +10,10 @@ const useEntriesPaginated = (cursor?: number, userId?: number) => {
 }
 
 export { useEntriesPaginatedKey, useEntriesPaginated }
+
+const useEntriesStatsKey = 'entries-stats'
+const useEntriesStats = () => {
+  return useQuery([useEntriesStatsKey], () => EntryService.getEntriesStats())
+}
+
+export { useEntriesStatsKey, useEntriesStats }

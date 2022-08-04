@@ -14,3 +14,11 @@ export const getPaginatedEntries = (cursor = "", userId = ""): Promise<entriesPa
     .then((response) => response.data)
 }
 
+export type entriesStats = {
+  monthMoneySpent: string,
+  dayCalories: number
+}
+export const getEntriesStats = (): Promise<entriesStats> => {
+  return apiClient.get("/entries/stats").then((response) => response.data.data)
+}
+
