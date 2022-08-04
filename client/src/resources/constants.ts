@@ -7,3 +7,5 @@ export const QUERY_OPTIONS = {
     },
   }
 }
+
+export const USER_TOKEN = "USER_TOKEN"
