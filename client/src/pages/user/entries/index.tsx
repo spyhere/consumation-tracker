@@ -14,6 +14,7 @@ import {
   Layout,
   PageHeader,
   Row,
+  Spin,
   Statistic,
   Typography
 } from "antd"
@@ -22,8 +23,8 @@ const { Header, Content } = Layout
 const { Title } = Typography
 
 const Entries = () => {
-  const { data, fetchNextPage, hasNextPage } = useEntriesPaginated()
-  const { data : entriesStats} = useEntriesStats()
+  const { data, fetchNextPage, hasNextPage, isLoading: isLoadingEntries } = useEntriesPaginated()
+  const { data : entriesStats, isLoading: isLoadingStats} = useEntriesStats()
 
   const loadMoreDates = () => {
     fetchNextPage()
@@ -33,7 +34,7 @@ const Entries = () => {
   const { monthMoneySpent, dayCalories } = entriesStats || { monthMoneySpent: "", dayCalories: "" }
 
   return (
-    <>
+    <Spin spinning={isLoadingStats || isLoadingEntries}>
       <PageHeader>
         <Title level={3}>Entries</Title>
       </PageHeader>
@@ -55,7 +56,7 @@ const Entries = () => {
           )}
         </Content>
       </Layout>
-    </>
+    </Spin>
   )
 }
 
