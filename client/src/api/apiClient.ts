@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios"
-import { USER_TOKEN } from "../resources/constants"
+import { USER_TOKEN } from "resources/constants"
 
 
 const apiClient = axios.create({

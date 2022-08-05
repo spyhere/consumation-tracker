@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table } from "antd"
-import { EntryT } from "../api/entry"
+import { EntryT } from "api/entry"
 import { ColumnsType } from "antd/es/table"
 
 type Props = {

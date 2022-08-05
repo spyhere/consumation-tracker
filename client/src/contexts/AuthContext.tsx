@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react'
 import jwt_decode from 'jwt-decode'
-import { USER_TOKEN } from "../resources/constants"
-import { AuthEnum } from "../enums"
+import { USER_TOKEN } from "resources/constants"
+import { AuthEnum } from "enums"
 
 type AuthContextT = {
   role: AuthEnum | null,

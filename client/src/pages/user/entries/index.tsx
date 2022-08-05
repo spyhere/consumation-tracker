@@ -33,7 +33,7 @@ import {
 import {
   CALORIES_LIMIT,
   MONEY_SPENT_LIMIT
-} from "../../../resources/constants"
+} from "resources/constants"
 
 const { Header, Content } = Layout
 const { Title } = Typography

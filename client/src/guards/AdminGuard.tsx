@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navigate, useLocation } from "react-router-dom"
-import { AuthEnum } from "../enums"
-import { useAuthContext } from "../contexts/AuthContext"
+import { AuthEnum } from "enums"
+import { useAuthContext } from "contexts/AuthContext"
 
 type Props = {
   children: JSX.Element

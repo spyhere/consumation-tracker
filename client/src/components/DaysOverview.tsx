@@ -1,6 +1,6 @@
 import React from 'react'
 import InfiniteScroll from "react-infinite-scroll-component"
-import { DayT } from "../api/entry"
+import { DayT } from "api/entry"
 import Day from "./Day"
 import {
   Col,

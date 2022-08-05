@@ -1,12 +1,12 @@
 import React from 'react'
-import { DayT } from "../api/entry"
+import { DayT } from "api/entry"
 import {
   Card,
   Collapse
 } from "antd"
 import EntryList from "./EntryList"
 import CardWarningTitle from "./CardWarningTitle"
-import { CALORIES_LIMIT } from "../resources/constants"
+import { CALORIES_LIMIT } from "resources/constants"
 
 const { Panel } = Collapse
 
