@@ -1,9 +1,9 @@
 import apiClient from "../apiClient"
-import { Day } from "./types"
+import { DayT } from "./types"
 
 export type entriesPaginated = {
   data: {
-    dates: Day[]
+    dates: DayT[]
   }
   meta: {
     cursor: number

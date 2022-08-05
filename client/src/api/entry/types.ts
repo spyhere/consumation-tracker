@@ -1,12 +1,12 @@
 
-export type Day = {
+export type DayT = {
   id: number
   daytime: string
-  Entry: Entry[]
+  Entry: EntryT[]
   consumed: number
 }
 
-export type Entry = {
+export type EntryT = {
   calories: number
   createdAt: string
   day_id: number
