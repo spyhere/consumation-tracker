@@ -15,11 +15,17 @@ export const getPaginatedEntries = ({ pageParam }: QueryFunctionContext): Promis
     .then((response) => response.data)
 }
 
+
 export type entriesStats = {
   monthMoneySpent: string,
   dayCalories: number | null
 }
 export const getEntriesStats = (): Promise<entriesStats> => {
   return apiClient.get("/entries/stats").then((response) => response.data.data)
+}
+
+
+export const createEntry = (body: Record<string, unknown>) => {
+  return apiClient.post("/entries", body)
 }
 

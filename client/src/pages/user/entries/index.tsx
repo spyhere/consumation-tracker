@@ -2,8 +2,11 @@ import React from 'react'
 import DaysOverview from "components/DaysOverview"
 import {
   useEntriesPaginated,
-  useEntriesStats
+  useEntriesPaginatedKey,
+  useEntriesStats,
+  useEntriesStatsKey,
 } from "queries/entry"
+import EntryService from "api/entry"
 import {
   DollarOutlined,
   DotChartOutlined,
@@ -13,6 +16,7 @@ import {
   BackTop,
   Col,
   Divider,
+  Form,
   Layout,
   PageHeader,
   Row,
@@ -21,20 +25,33 @@ import {
   Typography
 } from "antd"
 import NewEntryForm from "components/NewEntryForm"
+import {
+  useMutation,
+  useQueryClient
+} from "@tanstack/react-query"
 
 const { Header, Content } = Layout
 const { Title } = Typography
 
 const Entries = () => {
+  const queryClient = useQueryClient()
+  const [form] = Form.useForm()
   const { data, fetchNextPage, hasNextPage, isLoading: isLoadingEntries } = useEntriesPaginated()
   const { data: entriesStats, isLoading: isLoadingStats } = useEntriesStats()
+  const entryCreate = useMutation(EntryService.createEntry, {
+    onSuccess: () => {
+      form.resetFields()
+      queryClient.invalidateQueries([useEntriesPaginatedKey])
+      queryClient.invalidateQueries([useEntriesStatsKey])
+    }
+  })
 
   const loadMoreDates = () => {
     fetchNextPage()
   }
 
-  const submitForm = (values: Record<string, unknown>, resetFields: () => void) => {
-    // submit
+  const submitForm = (values: Record<string, unknown>) => {
+    entryCreate.mutate(values)
   }
 
 
@@ -59,7 +76,7 @@ const Entries = () => {
         </Header>
         <Content>
           <Divider/>
-          <NewEntryForm submitForm={submitForm} onSubmitFail={() => {}}/>
+          <NewEntryForm submitForm={submitForm} onSubmitFail={() => {}} form={form}/>
           <Divider/>
           {days && (
             <DaysOverview days={days} hasNextPage={hasNextPage} loaderFunction={loadMoreDates}/>

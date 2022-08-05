@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Button,
   Form,
+  FormInstance,
   Input,
   Typography
 } from "antd"
@@ -9,17 +10,12 @@ import {
 const { Title } = Typography
 
 type Props = {
-  submitForm: (values: Record<string, unknown>, resetFields: () => void) => void
+  submitForm: (values: Record<string, unknown>) => void
   onSubmitFail: () => void
+  form: FormInstance
 }
 
-const NewEntryForm = ({ submitForm, onSubmitFail }: Props) => {
-  const [form] = Form.useForm()
-
-  const onFinish = (values: Record<string, unknown>) => {
-    submitForm(values, () => form.resetFields())
-  }
-
+const NewEntryForm = ({ submitForm, onSubmitFail, form }: Props) => {
   return (
     <>
       <Form
@@ -28,7 +24,7 @@ const NewEntryForm = ({ submitForm, onSubmitFail }: Props) => {
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 8 }}
         initialValues={{ remember: true }}
-        onFinish={onFinish}
+        onFinish={submitForm}
         onFinishFailed={onSubmitFail}
         autoComplete="off"
       >
