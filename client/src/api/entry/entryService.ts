@@ -1,5 +1,6 @@
 import apiClient from "../apiClient"
 import { DayT } from "./types"
+import { QueryFunctionContext } from "@tanstack/react-query"
 
 export type entriesPaginated = {
   data: {
@@ -9,8 +10,8 @@ export type entriesPaginated = {
     cursor: number
   }
 }
-export const getPaginatedEntries = (cursor?: number, userId?: number): Promise<entriesPaginated> => {
-  return apiClient.get(`/entries?cursor=${cursor || ""}&user=${userId || ""}`)
+export const getPaginatedEntries = ({ pageParam }: QueryFunctionContext): Promise<entriesPaginated> => {
+  return apiClient.get(`/entries?cursor=${pageParam || ""}`)
     .then((response) => response.data)
 }
 

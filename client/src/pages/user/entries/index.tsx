@@ -22,12 +22,14 @@ const { Header, Content } = Layout
 const { Title } = Typography
 
 const Entries = () => {
-  const { data: { data, meta } = {} } = useEntriesPaginated()
+  const { data, fetchNextPage, hasNextPage } = useEntriesPaginated()
   const { data: { monthMoneySpent, dayCalories } = { monthMoneySpent: "", dayCalories: null } } = useEntriesStats()
 
   const loadMoreDates = () => {
-    console.log("load more")
+    fetchNextPage()
   }
+
+  const days = data?.pages.map(it => it.data.dates).flat()
 
   return (
     <>
@@ -47,8 +49,8 @@ const Entries = () => {
         </Header>
         <Content>
           <Divider/>
-          {data?.dates && meta && (
-            <DaysOverview data={data} meta={meta} loaderFunction={loadMoreDates}/>
+          {days && (
+            <DaysOverview days={days} hasNextPage={hasNextPage} loaderFunction={loadMoreDates}/>
           )}
         </Content>
       </Layout>
