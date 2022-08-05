@@ -12,7 +12,7 @@ const AdminGuard = ({ children }: Props) => {
   const location = useLocation()
 
   if (role !== AuthEnum.ADMIN) {
-    return <Navigate to="/entries" state={{ from: location }} replace/>
+    return <Navigate to="/" state={{ from: location }} replace/>
   }
 
   return children
