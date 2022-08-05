@@ -28,7 +28,7 @@ const columns: ColumnsType<EntryT> = [
     title: "Time",
     dataIndex: "createdAt",
     key: "time",
-    render: time => new Date(time).toDateString()
+    render: time => new Date(time).toLocaleTimeString()
   },
 ]
 
