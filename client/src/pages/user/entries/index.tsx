@@ -35,6 +35,7 @@ import {
   CALORIES_LIMIT,
   MONEY_SPENT_LIMIT
 } from "resources/constants"
+import { StateContextProvider } from "contexts/entryContext"
 
 const { Header, Content } = Layout
 const { Title } = Typography
@@ -52,6 +53,12 @@ const Entries = () => {
       queryClient.invalidateQueries([useEntriesStatsKey])
     }
   })
+  const entryDelete = useMutation(EntryService.deleteEntry, {
+    onSuccess: () => {
+      queryClient.invalidateQueries([useEntriesPaginatedKey])
+      queryClient.invalidateQueries([useEntriesStatsKey])
+    }
+  })
 
   const loadMoreDates = () => {
     fetchNextPage()
@@ -59,6 +66,10 @@ const Entries = () => {
 
   const submitForm = (values: Record<string, unknown>) => {
     entryCreate.mutate({ body: values, userId })
+  }
+
+  const deleteEntry = (id: number) => {
+    entryDelete.mutate(id)
   }
 
 
@@ -69,41 +80,43 @@ const Entries = () => {
   const isMoneyLimitReached = (monthMoneySpent || 0) >= MONEY_SPENT_LIMIT
 
   return (
-    <Spin spinning={isLoadingStats || isLoadingEntries}>
-      <PageHeader>
-        <Title level={3}>Entries</Title>
-      </PageHeader>
-      <Layout>
-        <Header>
-          <Row justify="center" gutter={16}>
-            <Col span={5}>
-              <Statistic title="Money spent this month" value={monthMoneySpent} prefix={<DollarOutlined/>}/>
-              {isMoneyLimitReached && (
-                <Alert message="Money limit is reached" type="warning" showIcon closable/>
-              )}
-            </Col>
-            <Col span={5}>
-              <Statistic title="Calories consumed this day" value={dayCalories || 0} prefix={<DotChartOutlined/>}/>
-              {isCaloriesLimitReached && (
-                <Alert message="Calories limit is reached" type="warning" showIcon closable/>
-              )}
-            </Col>
-          </Row>
-        </Header>
-        <Content>
-          <Divider/>
-          <NewEntryForm submitForm={submitForm} onSubmitFail={() => {
-          }} form={form}/>
-          <Divider/>
-          {days && (
-            <DaysOverview days={days} hasNextPage={hasNextPage} loaderFunction={loadMoreDates}/>
-          )}
-        </Content>
-      </Layout>
-      <BackTop>
-        <ToTopOutlined style={{ fontSize: "40px" }}/>
-      </BackTop>
-    </Spin>
+    <StateContextProvider defaultValue={{ deleteEntry }}>
+      <Spin spinning={isLoadingStats || isLoadingEntries}>
+        <PageHeader>
+          <Title level={3}>Entries</Title>
+        </PageHeader>
+        <Layout>
+          <Header>
+            <Row justify="center" gutter={16}>
+              <Col span={5}>
+                <Statistic title="Money spent this month" value={monthMoneySpent} prefix={<DollarOutlined/>}/>
+                {isMoneyLimitReached && (
+                  <Alert message="Money limit is reached" type="warning" showIcon closable/>
+                )}
+              </Col>
+              <Col span={5}>
+                <Statistic title="Calories consumed this day" value={dayCalories || 0} prefix={<DotChartOutlined/>}/>
+                {isCaloriesLimitReached && (
+                  <Alert message="Calories limit is reached" type="warning" showIcon closable/>
+                )}
+              </Col>
+            </Row>
+          </Header>
+          <Content>
+            <Divider/>
+            <NewEntryForm submitForm={submitForm} onSubmitFail={() => {
+            }} form={form}/>
+            <Divider/>
+            {days && (
+              <DaysOverview days={days} hasNextPage={hasNextPage} loaderFunction={loadMoreDates}/>
+            )}
+          </Content>
+        </Layout>
+        <BackTop>
+          <ToTopOutlined style={{ fontSize: "40px" }}/>
+        </BackTop>
+      </Spin>
+    </StateContextProvider>
   )
 }
 

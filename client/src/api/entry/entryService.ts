@@ -37,3 +37,8 @@ export const createEntry = ({ body, userId }: createEntryProps) => {
   return apiClient.post(adminPrefix + "/entries", body)
 }
 
+
+export const deleteEntry = (entryId: number) => {
+  return apiClient.delete(`/admin/users/entries/${entryId}`)
+}
+
