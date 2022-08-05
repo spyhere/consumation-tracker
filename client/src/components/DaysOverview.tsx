@@ -4,6 +4,7 @@ import { DayT } from "../api/entry"
 import Day from "./Day"
 import {
   Col,
+  Empty,
   Row,
   Space
 } from "antd"
@@ -15,6 +16,10 @@ type Props = {
 }
 
 const DaysOverview = ({ days, hasNextPage, loaderFunction }: Props) => {
+
+  if (!days.length) {
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="You have no entries" />
+  }
   return (
     <>
       <InfiniteScroll
