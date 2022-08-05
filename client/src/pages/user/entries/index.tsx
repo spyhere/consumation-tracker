@@ -58,7 +58,7 @@ const Entries = () => {
   }
 
   const submitForm = (values: Record<string, unknown>) => {
-    entryCreate.mutate(values)
+    entryCreate.mutate({ body: values, userId })
   }
 
 

@@ -14,6 +14,7 @@ router.group("/admin", (router) => {
     router.get("/", UserController.index)
     router.get("/:user/entries/stats", EntryController.getStats)
     router.get("/:user/entries", EntryController.index)
+    router.post("/:user/entries", EntryController.store)
   })
 })
 

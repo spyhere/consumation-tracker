@@ -27,8 +27,13 @@ export const getEntriesStats = (userId?: string): Promise<entriesStatsT> => {
   return apiClient.get(adminPrefix + "/entries/stats").then((response) => response.data.data)
 }
 
+type createEntryProps = {
+  body: Record<string, unknown>
+  userId?: string
+}
 
-export const createEntry = (body: Record<string, unknown>) => {
-  return apiClient.post("/entries", body)
+export const createEntry = ({ body, userId }: createEntryProps) => {
+  const adminPrefix = userId ? `admin/users/${userId}` : ""
+  return apiClient.post(adminPrefix + "/entries", body)
 }
 

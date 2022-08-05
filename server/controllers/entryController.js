@@ -115,7 +115,7 @@ class EntryController {
       return res.status(hasErrors[0]).send(hasErrors[1])
     }
 
-    const user_id = req.user.id
+    const user_id = Number(req.params.user) || req.user.id
     const { calories, food, price } = req.body
 
     const daytime = new Date().toISOString().split("T")[0]
