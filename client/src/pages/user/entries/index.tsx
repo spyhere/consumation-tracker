@@ -6,9 +6,11 @@ import {
 } from "queries/entry"
 import {
   DollarOutlined,
-  DotChartOutlined
+  DotChartOutlined,
+  ToTopOutlined
 } from "@ant-design/icons"
 import {
+  BackTop,
   Col,
   Divider,
   Layout,
@@ -24,7 +26,7 @@ const { Title } = Typography
 
 const Entries = () => {
   const { data, fetchNextPage, hasNextPage, isLoading: isLoadingEntries } = useEntriesPaginated()
-  const { data : entriesStats, isLoading: isLoadingStats} = useEntriesStats()
+  const { data: entriesStats, isLoading: isLoadingStats } = useEntriesStats()
 
   const loadMoreDates = () => {
     fetchNextPage()
@@ -56,6 +58,9 @@ const Entries = () => {
           )}
         </Content>
       </Layout>
+      <BackTop>
+        <ToTopOutlined style={{fontSize: "40px"}}/>
+      </BackTop>
     </Spin>
   )
 }
