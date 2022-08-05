@@ -15,3 +15,4 @@ export const JWT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZ
 export const USER_TOKEN = "USER_TOKEN"
 
 export const CALORIES_LIMIT = 500
+export const MONEY_SPENT_LIMIT = 1000
