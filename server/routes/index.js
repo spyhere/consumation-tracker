@@ -8,9 +8,11 @@ const EntryController = require("../controllers/entryController")
 
 router.use(verifyTokenMiddleware)
 
-router.group("/users", (router) => {
+router.group("/admin", (router) => {
   router.use(isAdminMiddleware)
-  router.get("/", UserController.index)
+  router.group("/users", (router) => {
+    router.get("/", UserController.index)
+  })
 })
 
 router.group("/entries", (router) => {
