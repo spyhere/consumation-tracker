@@ -23,11 +23,22 @@ class EntryController {
         },
       },
       where: {
-        User: {
-          some: {
-            id: userId
-          }
-        }
+        OR: [
+          {
+            User: {
+              some: {
+                id: userId
+              }
+            }
+          },
+          {
+            User: {
+              every: {
+                id: userId
+              }
+            }
+          },
+        ]
       },
       include: {
         Entry: {
