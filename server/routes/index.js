@@ -13,6 +13,7 @@ router.group("/admin", (router) => {
   router.group("/users", (router) => {
     router.get("/", UserController.index)
     router.get("/:user/entries/stats", EntryController.getStats)
+    router.get("/:user/entries", EntryController.index)
   })
 })
 

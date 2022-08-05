@@ -1,5 +1,4 @@
 const { PrismaClient } = require("@prisma/client")
-const isAdmin = require('../helpers/isAdmin')
 const createEntryRequest = require("../requests/createEntryRequests")
 const EntryService = require("../services/entryService")
 
@@ -8,11 +7,7 @@ const prisma = new PrismaClient()
 class EntryController {
 
   static async index(req, res) {
-    if (req.query.user && !isAdmin(req, res)) {
-      return
-    }
-
-    const userId = Number(req.query.user) || req.user.id
+    const userId = Number(req.params.user) || req.user.id
     const takeLimit = Number(process.env.ENTRIES_PAGINATION)
 
     const result = await prisma.day.findMany({
