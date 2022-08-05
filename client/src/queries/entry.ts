@@ -5,9 +5,9 @@ import {
 import EntryService from "api/entry"
 
 const useEntriesPaginatedKey = "entries-paginated"
-const useEntriesPaginated = () => {
+const useEntriesPaginated = (userId?: string) => {
   return useInfiniteQuery(
-    [useEntriesPaginatedKey],
+    [useEntriesPaginatedKey, userId],
     EntryService.getPaginatedEntries,
     { getNextPageParam: (lastPage) => lastPage.meta.cursor }
   )

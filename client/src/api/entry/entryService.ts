@@ -10,8 +10,10 @@ export type entriesPaginatedT = {
     cursor: number
   }
 }
-export const getPaginatedEntries = ({ pageParam }: QueryFunctionContext): Promise<entriesPaginatedT> => {
-  return apiClient.get(`/entries?cursor=${pageParam || ""}`)
+export const getPaginatedEntries = ({ queryKey, pageParam }: QueryFunctionContext): Promise<entriesPaginatedT> => {
+  const userId = queryKey[1]
+  const adminPrefix = userId ? `admin/users/${userId}` : ""
+  return apiClient.get(adminPrefix + `/entries?cursor=${pageParam || ""}`)
     .then((response) => response.data)
 }
 

@@ -43,7 +43,7 @@ const Entries = () => {
   const { id: userId } = useParams()
   const queryClient = useQueryClient()
   const [form] = Form.useForm()
-  const { data, fetchNextPage, hasNextPage, isLoading: isLoadingEntries } = useEntriesPaginated()
+  const { data, fetchNextPage, hasNextPage, isLoading: isLoadingEntries } = useEntriesPaginated(userId)
   const { data: entriesStats, isLoading: isLoadingStats } = useEntriesStats(userId)
   const entryCreate = useMutation(EntryService.createEntry, {
     onSuccess: () => {
