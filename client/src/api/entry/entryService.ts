@@ -16,7 +16,7 @@ export const getPaginatedEntries = (cursor?: number, userId?: number): Promise<e
 
 export type entriesStats = {
   monthMoneySpent: string,
-  dayCalories: number
+  dayCalories: number | null
 }
 export const getEntriesStats = (): Promise<entriesStats> => {
   return apiClient.get("/entries/stats").then((response) => response.data.data)
