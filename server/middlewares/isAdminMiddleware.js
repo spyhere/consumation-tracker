@@ -1,8 +1,9 @@
-const isAdmin = require('../helpers/isAdmin')
 
 const isAdminMiddleware = (req, res, next) => {
-  if (!isAdmin(req, res)) {
-    return
+  const role = req.user.role
+
+  if (role !== 'ADMIN') {
+    return res.status(403).send("You are not authorized for this action")
   }
   return next()
 }
