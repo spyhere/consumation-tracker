@@ -34,13 +34,6 @@ class EntryController {
             }
           },
         ],
-        NOT: {
-          User: {
-            none: {
-              id: userId
-            }
-          }
-        }
       },
       include: {
         Entry: {
