@@ -18,3 +18,7 @@ code {
 .ant-layout-header {
   background: var(--ant-primary-1);
 }
+
+.user-card {
+  cursor: pointer;
+}
