@@ -20,6 +20,7 @@ import {
   Statistic,
   Typography
 } from "antd"
+import NewEntryForm from "components/NewEntryForm"
 
 const { Header, Content } = Layout
 const { Title } = Typography
@@ -31,6 +32,11 @@ const Entries = () => {
   const loadMoreDates = () => {
     fetchNextPage()
   }
+
+  const submitForm = (values: Record<string, unknown>, resetFields: () => void) => {
+    // submit
+  }
+
 
   const days = data?.pages.map(it => it.data.dates).flat()
   const { monthMoneySpent, dayCalories } = entriesStats || { monthMoneySpent: "", dayCalories: "" }
@@ -53,13 +59,15 @@ const Entries = () => {
         </Header>
         <Content>
           <Divider/>
+          <NewEntryForm submitForm={submitForm} onSubmitFail={() => {}}/>
+          <Divider/>
           {days && (
             <DaysOverview days={days} hasNextPage={hasNextPage} loaderFunction={loadMoreDates}/>
           )}
         </Content>
       </Layout>
       <BackTop>
-        <ToTopOutlined style={{fontSize: "40px"}}/>
+        <ToTopOutlined style={{ fontSize: "40px" }}/>
       </BackTop>
     </Spin>
   )
