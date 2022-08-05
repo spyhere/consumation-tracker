@@ -6,6 +6,7 @@ import {
 } from "antd"
 import EntryList from "./EntryList"
 import CardWarningTitle from "./CardWarningTitle"
+import { CALORIES_LIMIT } from "../resources/constants"
 
 const { Panel } = Collapse
 
@@ -15,7 +16,7 @@ type Props = {
 
 
 const Day = ({ data }: Props) => {
-  const calLimitReached = data.consumed >= Number(process.env.REACT_APP_CALORIES_LIMIT!)
+  const calLimitReached = data.consumed >= Number(CALORIES_LIMIT)
 
   const dangerStyle = calLimitReached ? { background: "#ff7875", color: "#fff" } : {}
 

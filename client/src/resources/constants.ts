@@ -9,3 +9,5 @@ export const QUERY_OPTIONS = {
 }
 
 export const USER_TOKEN = "USER_TOKEN"
+
+export const CALORIES_LIMIT = 500
