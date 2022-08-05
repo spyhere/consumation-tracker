@@ -6,7 +6,8 @@ import {
   Col,
   Empty,
   Row,
-  Space
+  Space,
+  Spin
 } from "antd"
 
 type Props = {
@@ -25,7 +26,7 @@ const DaysOverview = ({ days, hasNextPage, loaderFunction }: Props) => {
       <InfiniteScroll
         dataLength={days.length}
         hasMore={!!hasNextPage}
-        loader={<span>Loading...</span>}
+        loader={<Row justify="center"><Spin /></Row>}
         next={loaderFunction}
       >
         <Row justify="center" gutter={16}>
