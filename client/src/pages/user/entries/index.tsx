@@ -23,13 +23,14 @@ const { Title } = Typography
 
 const Entries = () => {
   const { data, fetchNextPage, hasNextPage } = useEntriesPaginated()
-  const { data: { monthMoneySpent, dayCalories } = { monthMoneySpent: "", dayCalories: null } } = useEntriesStats()
+  const { data : entriesStats} = useEntriesStats()
 
   const loadMoreDates = () => {
     fetchNextPage()
   }
 
   const days = data?.pages.map(it => it.data.dates).flat()
+  const { monthMoneySpent, dayCalories } = entriesStats || { monthMoneySpent: "", dayCalories: "" }
 
   return (
     <>
