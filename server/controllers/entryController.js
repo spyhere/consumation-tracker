@@ -192,7 +192,7 @@ class EntryController {
   }
 
   static async getStats(req, res) {
-    const userId = req.user.id
+    const userId = Number(req.params.user) || req.user.id
     const monthStart = new Date(new Date().setDate(1))
     const dayStart = new Date(new Date().setHours(0, 0, 0, 0))
 
