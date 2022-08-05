@@ -1,5 +1,4 @@
 import React from 'react'
-import './App.css'
 import AppRoutes from "./routes"
 import { USER_TOKEN } from "resources/constants"
 import { AuthContextProvider } from "./contexts/AuthContext"
