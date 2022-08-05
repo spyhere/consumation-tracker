@@ -1,5 +1,6 @@
 import React from 'react'
 import DaysOverview from "components/DaysOverview"
+import { useParams } from "react-router-dom"
 import {
   useEntriesPaginated,
   useEntriesPaginatedKey,
@@ -39,10 +40,11 @@ const { Header, Content } = Layout
 const { Title } = Typography
 
 const Entries = () => {
+  const { id: userId } = useParams()
   const queryClient = useQueryClient()
   const [form] = Form.useForm()
   const { data, fetchNextPage, hasNextPage, isLoading: isLoadingEntries } = useEntriesPaginated()
-  const { data: entriesStats, isLoading: isLoadingStats } = useEntriesStats()
+  const { data: entriesStats, isLoading: isLoadingStats } = useEntriesStats(userId)
   const entryCreate = useMutation(EntryService.createEntry, {
     onSuccess: () => {
       form.resetFields()
@@ -77,20 +79,21 @@ const Entries = () => {
             <Col span={5}>
               <Statistic title="Money spent this month" value={monthMoneySpent} prefix={<DollarOutlined/>}/>
               {isMoneyLimitReached && (
-                <Alert message="Money limit is reached" type="warning" showIcon closable />
+                <Alert message="Money limit is reached" type="warning" showIcon closable/>
               )}
             </Col>
             <Col span={5}>
               <Statistic title="Calories consumed this day" value={dayCalories || 0} prefix={<DotChartOutlined/>}/>
               {isCaloriesLimitReached && (
-                <Alert message="Calories limit is reached" type="warning" showIcon closable />
+                <Alert message="Calories limit is reached" type="warning" showIcon closable/>
               )}
             </Col>
           </Row>
         </Header>
         <Content>
           <Divider/>
-          <NewEntryForm submitForm={submitForm} onSubmitFail={() => {}} form={form}/>
+          <NewEntryForm submitForm={submitForm} onSubmitFail={() => {
+          }} form={form}/>
           <Divider/>
           {days && (
             <DaysOverview days={days} hasNextPage={hasNextPage} loaderFunction={loadMoreDates}/>

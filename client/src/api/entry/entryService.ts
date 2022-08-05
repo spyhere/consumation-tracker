@@ -20,8 +20,9 @@ export type entriesStatsT = {
   monthMoneySpent: string,
   dayCalories: number | null
 }
-export const getEntriesStats = (): Promise<entriesStatsT> => {
-  return apiClient.get("/entries/stats").then((response) => response.data.data)
+export const getEntriesStats = (userId?: string): Promise<entriesStatsT> => {
+  const adminPrefix = userId ? `admin/users/${userId}` : ""
+  return apiClient.get(adminPrefix + "/entries/stats").then((response) => response.data.data)
 }
 
 

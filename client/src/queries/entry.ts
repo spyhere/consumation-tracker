@@ -16,8 +16,8 @@ const useEntriesPaginated = () => {
 export { useEntriesPaginatedKey, useEntriesPaginated }
 
 const useEntriesStatsKey = 'entries-stats'
-const useEntriesStats = () => {
-  return useQuery([useEntriesStatsKey], () => EntryService.getEntriesStats())
+const useEntriesStats = (userId?: string) => {
+  return useQuery([useEntriesStatsKey], () => EntryService.getEntriesStats(userId))
 }
 
 export { useEntriesStatsKey, useEntriesStats }
