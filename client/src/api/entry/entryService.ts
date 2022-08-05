@@ -9,8 +9,8 @@ export type entriesPaginated = {
     cursor: number
   }
 }
-export const getPaginatedEntries = (cursor = "", userId = ""): Promise<entriesPaginated> => {
-  return apiClient.get(`/entries?cursor=${cursor}&user=${userId}`)
+export const getPaginatedEntries = (cursor?: number, userId?: number): Promise<entriesPaginated> => {
+  return apiClient.get(`/entries?cursor=${cursor || ""}&user=${userId || ""}`)
     .then((response) => response.data)
 }
 
