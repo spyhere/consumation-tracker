@@ -7,7 +7,7 @@ import {
   useEntriesStats,
   useEntriesStatsKey,
 } from "queries/entry"
-import EntryService from "api/entry"
+import EntryService, { EntryUpdateT } from "api/entry"
 import {
   DollarOutlined,
   DotChartOutlined,
@@ -59,6 +59,12 @@ const Entries = () => {
       queryClient.invalidateQueries([useEntriesStatsKey])
     }
   })
+  const entryEdit = useMutation(EntryService.editEntry, {
+    onSuccess: () => {
+      queryClient.invalidateQueries([useEntriesPaginatedKey])
+      queryClient.invalidateQueries([useEntriesStatsKey])
+    }
+  })
 
   const loadMoreDates = () => {
     fetchNextPage()
@@ -72,6 +78,10 @@ const Entries = () => {
     entryDelete.mutate(id)
   }
 
+  const editEntry = (id: number, body: EntryUpdateT) => {
+    entryEdit.mutate({ id, body })
+  }
+
 
   const days = data?.pages.map(it => it.data.dates).flat()
   const { monthMoneySpent, dayCalories } = entriesStats || { monthMoneySpent: "", dayCalories: "" }
@@ -80,7 +90,7 @@ const Entries = () => {
   const isMoneyLimitReached = (monthMoneySpent || 0) >= MONEY_SPENT_LIMIT
 
   return (
-    <StateContextProvider defaultValue={{ deleteEntry }}>
+    <StateContextProvider defaultValue={{ deleteEntry, editEntry }}>
       <Spin spinning={isLoadingStats || isLoadingEntries}>
         <PageHeader>
           <Title level={3}>Entries</Title>
