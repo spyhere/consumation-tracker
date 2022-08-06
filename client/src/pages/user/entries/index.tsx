@@ -1,6 +1,10 @@
 import React from 'react'
 import DaysOverview from "components/DaysOverview"
-import { useParams } from "react-router-dom"
+import {
+  Link,
+  useLocation,
+  useParams
+} from "react-router-dom"
 import {
   useEntriesPaginated,
   useEntriesPaginatedKey,
@@ -11,7 +15,8 @@ import EntryService, { EntryBodyT } from "api/entry"
 import {
   DollarOutlined,
   DotChartOutlined,
-  ToTopOutlined
+  ToTopOutlined,
+  LeftOutlined
 } from "@ant-design/icons"
 import {
   Alert,
@@ -22,6 +27,7 @@ import {
   Layout,
   PageHeader,
   Row,
+  Space,
   Spin,
   Statistic,
   Typography
@@ -43,6 +49,7 @@ const { Title } = Typography
 const Entries = () => {
   const { id: userId } = useParams()
   const queryClient = useQueryClient()
+  const { pathname } = useLocation()
   const [form] = Form.useForm()
   const { data, fetchNextPage, hasNextPage, isLoading: isLoadingEntries } = useEntriesPaginated(userId)
   const { data: entriesStats, isLoading: isLoadingStats } = useEntriesStats(userId)
@@ -93,7 +100,14 @@ const Entries = () => {
     <StateContextProvider defaultValue={{ deleteEntry, editEntry }}>
       <Spin spinning={isLoadingStats || isLoadingEntries}>
         <PageHeader>
-          <Title level={3}>Entries</Title>
+          <Space direction="vertical">
+            {userId && (
+              <Link to={pathname.split(`/users/${userId}`)[0]}>
+                <LeftOutlined />
+              </Link>
+            )}
+            <Title level={3}>Entries</Title>
+          </Space>
         </PageHeader>
         <Layout>
           <Header>
