@@ -21,6 +21,13 @@ export const getPaginatedEntries = ({ queryKey, pageParam }: QueryFunctionContex
 }
 
 
+
+export const getEntriesByDates = (from: string, to: string): Promise<Omit<entriesPaginatedT, "meta">> => {
+  return apiClient.get(`/entries/by-dates?from=${from}&to=${to}`)
+    .then((response) => response.data)
+}
+
+
 export type entriesStatsT = {
   monthMoneySpent: string,
   dayCalories: number | null
