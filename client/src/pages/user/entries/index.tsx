@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import DaysOverview from "components/DaysOverview"
 import {
   Link,
@@ -6,6 +6,7 @@ import {
   useParams
 } from "react-router-dom"
 import {
+  useEntriesByDates,
   useEntriesPaginated,
   useEntriesPaginatedKey,
   useEntriesStats,
@@ -18,13 +19,14 @@ import {
 } from "@ant-design/icons"
 import {
   BackTop,
+  DatePicker,
   Divider,
   Form,
   Layout,
   PageHeader,
   Space,
   Spin,
-  Typography
+  Typography,
 } from "antd"
 import NewEntryForm from "components/NewEntryForm"
 import UserStatsHeader from "components/UserStatsHeader"
@@ -43,6 +45,11 @@ const Entries = () => {
   const { pathname } = useLocation()
   const [form] = Form.useForm()
   const { data, fetchNextPage, hasNextPage, isLoading: isLoadingEntries } = useEntriesPaginated(userId)
+  const [{ from, to }, setRange] = useState<{ from?: string, to?: string }>({})
+  const {
+    data: entriesByDatesData,
+    isFetching: isFetchingEntryByDates
+  } = useEntriesByDates(from!, to!, { enabled: !!from || !!to })
   const { data: entriesStats, isLoading: isLoadingStats } = useEntriesStats(userId)
   const entryCreate = useMutation(EntryService.createEntry, {
     onSuccess: () => {
@@ -80,13 +87,22 @@ const Entries = () => {
     entryEdit.mutate({ id, body })
   }
 
+  const handleDateFilter = (_: unknown, data: any) => {
+    const [from, to] = data
+    if (from && to) {
+      setRange({ from, to })
+    } else {
+      setRange({})
+    }
+  }
 
+  const daysFiltered = entriesByDatesData?.data.dates
   const days = data?.pages.map(it => it.data.dates).flat()
   const { monthMoneySpent, dayCalories } = entriesStats || { monthMoneySpent: "", dayCalories: null }
 
   return (
     <StateContextProvider defaultValue={{ deleteEntry, editEntry }}>
-      <Spin spinning={isLoadingStats || isLoadingEntries}>
+      <Spin spinning={isLoadingStats || isLoadingEntries || isFetchingEntryByDates}>
         <PageHeader>
           <Space direction="vertical">
             {userId && (
@@ -106,8 +122,13 @@ const Entries = () => {
             <NewEntryForm submitForm={submitForm} onSubmitFail={() => {
             }} form={form}/>
             <Divider/>
-            {days && (
+            <DatePicker.RangePicker onChange={handleDateFilter} className="datepicker"/>
+            <Divider/>
+            {days && ((!from && !to) || isFetchingEntryByDates) && (
               <DaysOverview days={days} hasNextPage={hasNextPage} loaderFunction={loadMoreDates}/>
+            )}
+            {daysFiltered && (
+              <DaysOverview days={daysFiltered}/>
             )}
           </Content>
         </Layout>

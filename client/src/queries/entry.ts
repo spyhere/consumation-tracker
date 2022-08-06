@@ -13,11 +13,29 @@ const useEntriesPaginated = (userId?: string) => {
   )
 }
 
-export { useEntriesPaginatedKey, useEntriesPaginated }
+export {
+  useEntriesPaginatedKey,
+  useEntriesPaginated
+}
+
+
+const useEntriesByDatesKey = "entries-by-dates"
+const useEntriesByDates = (from: string, to: string, options?: Record<string, unknown>) => {
+  return useQuery([useEntriesByDatesKey, { from, to }], () => EntryService.getEntriesByDates(from, to), options)
+}
+
+export {
+  useEntriesByDatesKey,
+  useEntriesByDates
+}
+
 
 const useEntriesStatsKey = 'entries-stats'
 const useEntriesStats = (userId?: string) => {
   return useQuery([useEntriesStatsKey], () => EntryService.getEntriesStats(userId))
 }
 
-export { useEntriesStatsKey, useEntriesStats }
+export {
+  useEntriesStatsKey,
+  useEntriesStats
+}

@@ -13,10 +13,10 @@ import {
 type Props = {
   days: DayT[]
   hasNextPage?: boolean
-  loaderFunction: () => void
+  loaderFunction?: () => void
 }
 
-const DaysOverview = ({ days, hasNextPage, loaderFunction }: Props) => {
+const DaysOverview = ({ days, hasNextPage, loaderFunction = () => {} }: Props) => {
 
   if (!days.length) {
     return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="You have no entries" />
