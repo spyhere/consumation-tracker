@@ -2,11 +2,11 @@ import {
   createContext,
   useContext
 } from "react"
-import { EntryUpdateT } from "../api/entry"
+import { EntryBodyT } from "../api/entry"
 
 type EntryContextT = {
   deleteEntry: (id: number) => void
-  editEntry: (id: number, body: EntryUpdateT) => void
+  editEntry: (id: number, body: EntryBodyT) => void
 }
 
 const noop = () => {}

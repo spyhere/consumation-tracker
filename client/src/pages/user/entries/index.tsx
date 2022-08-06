@@ -7,7 +7,7 @@ import {
   useEntriesStats,
   useEntriesStatsKey,
 } from "queries/entry"
-import EntryService, { EntryUpdateT } from "api/entry"
+import EntryService, { EntryBodyT } from "api/entry"
 import {
   DollarOutlined,
   DotChartOutlined,
@@ -70,7 +70,7 @@ const Entries = () => {
     fetchNextPage()
   }
 
-  const submitForm = (values: EntryUpdateT) => {
+  const submitForm = (values: EntryBodyT) => {
     entryCreate.mutate({ body: values, userId })
   }
 
@@ -78,7 +78,7 @@ const Entries = () => {
     entryDelete.mutate(id)
   }
 
-  const editEntry = (id: number, body: EntryUpdateT) => {
+  const editEntry = (id: number, body: EntryBodyT) => {
     entryEdit.mutate({ id, body })
   }
 

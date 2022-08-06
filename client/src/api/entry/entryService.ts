@@ -1,7 +1,7 @@
 import apiClient from "../apiClient"
 import {
   DayT,
-  EntryUpdateT
+  EntryBodyT
 } from "./types"
 import { QueryFunctionContext } from "@tanstack/react-query"
 
@@ -32,7 +32,7 @@ export const getEntriesStats = (userId?: string): Promise<entriesStatsT> => {
 
 type createEntryProps = {
   userId?: string
-  body: EntryUpdateT
+  body: EntryBodyT
 }
 
 export const createEntry = ({ body, userId }: createEntryProps) => {
@@ -48,7 +48,7 @@ export const deleteEntry = (entryId: number) => {
 
 type EditEntryProps = {
   id: number
-  body: EntryUpdateT
+  body: EntryBodyT
 }
 
 export const editEntry = ({ id, body }: EditEntryProps) => {

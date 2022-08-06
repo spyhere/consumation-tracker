@@ -6,12 +6,12 @@ import {
   Input,
   Typography
 } from "antd"
-import { EntryUpdateT } from "api/entry"
+import { EntryBodyT } from "api/entry"
 
 const { Title } = Typography
 
 type Props = {
-  submitForm: (values: EntryUpdateT) => void
+  submitForm: (values: EntryBodyT) => void
   onSubmitFail: () => void
   form: FormInstance
 }

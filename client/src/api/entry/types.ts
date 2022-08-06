@@ -17,7 +17,7 @@ export type EntryT = {
   user_id: number
 }
 
-export type EntryUpdateT = {
+export type EntryBodyT = {
   calories: number
   food: string
   price?: string
