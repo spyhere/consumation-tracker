@@ -31,8 +31,8 @@ export const getEntriesStats = (userId?: string): Promise<entriesStatsT> => {
 }
 
 type createEntryProps = {
-  body: Record<string, unknown>
   userId?: string
+  body: EntryUpdateT
 }
 
 export const createEntry = ({ body, userId }: createEntryProps) => {

@@ -70,7 +70,7 @@ const Entries = () => {
     fetchNextPage()
   }
 
-  const submitForm = (values: Record<string, unknown>) => {
+  const submitForm = (values: EntryUpdateT) => {
     entryCreate.mutate({ body: values, userId })
   }
 
