@@ -70,7 +70,7 @@ class EntryController {
     const toDate = req.query.to || new Date()
     const fromDate = req.query.from
 
-    const dates = await prisma.day.findMany({
+    const result = await prisma.day.findMany({
       where: {
         OR: [
           {
@@ -107,6 +107,8 @@ class EntryController {
         daytime: 'desc'
       }
     })
+
+    const dates = EntryService.addCaloriesCountPerDay(result)
 
     res.send({
       data: { dates },
