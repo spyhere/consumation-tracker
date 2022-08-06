@@ -1,5 +1,8 @@
 import apiClient from "../apiClient"
-import { DayT } from "./types"
+import {
+  DayT,
+  EntryUpdateT
+} from "./types"
 import { QueryFunctionContext } from "@tanstack/react-query"
 
 export type entriesPaginatedT = {
@@ -40,5 +43,15 @@ export const createEntry = ({ body, userId }: createEntryProps) => {
 
 export const deleteEntry = (entryId: number) => {
   return apiClient.delete(`/admin/users/entries/${entryId}`)
+}
+
+
+type EditEntryProps = {
+  id: number
+  body: EntryUpdateT
+}
+
+export const editEntry = ({ id, body }: EditEntryProps) => {
+  return apiClient.put(`/admin/users/entries/${id}`, body)
 }
 

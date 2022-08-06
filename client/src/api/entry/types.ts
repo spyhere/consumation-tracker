@@ -16,3 +16,9 @@ export type EntryT = {
   updatedAt: string | null
   user_id: number
 }
+
+export type EntryUpdateT = {
+  calories: number
+  food: string
+  price?: string
+}
