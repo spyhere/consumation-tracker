@@ -72,11 +72,22 @@ class EntryController {
 
     const dates = await prisma.day.findMany({
       where: {
-        User: {
-          some: {
-            id: userId
-          }
-        },
+        OR: [
+          {
+            User: {
+              some: {
+                id: userId
+              }
+            }
+          },
+          {
+            User: {
+              every: {
+                id: userId
+              }
+            }
+          },
+        ],
         daytime: {
           lte: toDate,
           gte: fromDate,
