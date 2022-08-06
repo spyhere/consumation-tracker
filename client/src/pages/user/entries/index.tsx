@@ -13,34 +13,25 @@ import {
 } from "queries/entry"
 import EntryService, { EntryBodyT } from "api/entry"
 import {
-  DollarOutlined,
-  DotChartOutlined,
-  ToTopOutlined,
-  LeftOutlined
+  LeftOutlined,
+  ToTopOutlined
 } from "@ant-design/icons"
 import {
-  Alert,
   BackTop,
-  Col,
   Divider,
   Form,
   Layout,
   PageHeader,
-  Row,
   Space,
   Spin,
-  Statistic,
   Typography
 } from "antd"
 import NewEntryForm from "components/NewEntryForm"
+import UserStatsHeader from "components/UserStatsHeader"
 import {
   useMutation,
   useQueryClient
 } from "@tanstack/react-query"
-import {
-  CALORIES_LIMIT,
-  MONEY_SPENT_LIMIT
-} from "resources/constants"
 import { StateContextProvider } from "contexts/entryContext"
 
 const { Header, Content } = Layout
@@ -91,10 +82,7 @@ const Entries = () => {
 
 
   const days = data?.pages.map(it => it.data.dates).flat()
-  const { monthMoneySpent, dayCalories } = entriesStats || { monthMoneySpent: "", dayCalories: "" }
-
-  const isCaloriesLimitReached = (dayCalories || 0) >= CALORIES_LIMIT
-  const isMoneyLimitReached = (monthMoneySpent || 0) >= MONEY_SPENT_LIMIT
+  const { monthMoneySpent, dayCalories } = entriesStats || { monthMoneySpent: "", dayCalories: null }
 
   return (
     <StateContextProvider defaultValue={{ deleteEntry, editEntry }}>
@@ -103,7 +91,7 @@ const Entries = () => {
           <Space direction="vertical">
             {userId && (
               <Link to={pathname.split(`/users/${userId}`)[0]}>
-                <LeftOutlined />
+                <LeftOutlined/>
               </Link>
             )}
             <Title level={3}>Entries</Title>
@@ -111,20 +99,7 @@ const Entries = () => {
         </PageHeader>
         <Layout>
           <Header>
-            <Row justify="center" gutter={16}>
-              <Col span={5}>
-                <Statistic title="Money spent this month" value={monthMoneySpent} prefix={<DollarOutlined/>}/>
-                {isMoneyLimitReached && (
-                  <Alert message="Money limit is reached" type="warning" showIcon closable/>
-                )}
-              </Col>
-              <Col span={5}>
-                <Statistic title="Calories consumed this day" value={dayCalories || 0} prefix={<DotChartOutlined/>}/>
-                {isCaloriesLimitReached && (
-                  <Alert message="Calories limit is reached" type="warning" showIcon closable/>
-                )}
-              </Col>
-            </Row>
+            <UserStatsHeader monthMoneySpent={monthMoneySpent} dayCalories={dayCalories}/>
           </Header>
           <Content>
             <Divider/>
