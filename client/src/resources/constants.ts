@@ -14,5 +14,5 @@ export const QUERY_OPTIONS = {
 export const JWT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IkJvYiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1OTQ0MDAxMX0.j1jXq-DPqrrR_nQI60k79DVSKk_IHFFi_rQEXG0JsmU"
 export const USER_TOKEN = "USER_TOKEN"
 
-export const CALORIES_LIMIT = 500
+export const CALORIES_LIMIT = 2100
 export const MONEY_SPENT_LIMIT = 1000
