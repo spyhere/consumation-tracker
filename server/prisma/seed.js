@@ -1,14 +1,19 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
-const aliceEntries = require("./aliceEntries")
-const bobEntries = require("./bobEntries")
+const { faker } = require("@faker-js/faker")
 
 async function main() {
   const alice = await prisma.user.create({
     data: { name: 'Alice' }
   })
 
-  for (const entry of aliceEntries) {
+  for (let i = 0; i < 100; i++) {
+    const entry = {
+      calories: Number(faker.commerce.price(250, 600, 0)),
+      createdAt: faker.date.between('2022-07-16T21:12:31.927Z', new Date().toISOString()).toISOString(),
+      food: faker.helpers.arrayElement(["burger", "cheese", "apple", "chicken", "chips", "rolls", "wings", "shawerma", "milkshake"]),
+      price: Number(faker.commerce.price(15, 70)),
+    }
     const daytime = entry.createdAt.split('T')[0]
     await prisma.day.upsert({
       where: { daytime },
@@ -52,7 +57,13 @@ async function main() {
     data: { name: 'Bob', role: 'ADMIN' }
   })
 
-  for (const entry of bobEntries) {
+  for (let i = 0; i < 100; i++) {
+    const entry = {
+      calories: Number(faker.commerce.price(200, 500, 0)),
+      createdAt: faker.date.between('2022-07-16T21:12:31.927Z', new Date().toISOString()).toISOString(),
+      food: faker.helpers.arrayElement(["burger", "cheese", "apple", "chicken", "chips", "rolls", "wings", "shawerma"]),
+      price: Number(faker.commerce.price(20, 100)),
+    }
     const daytime = entry.createdAt.split('T')[0]
     await prisma.day.upsert({
       where: { daytime },
