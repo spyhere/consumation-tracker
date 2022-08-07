@@ -32,7 +32,7 @@ export {
 
 const useEntriesStatsKey = 'entries-stats'
 const useEntriesStats = (userId?: string) => {
-  return useQuery([useEntriesStatsKey], () => EntryService.getEntriesStats(userId))
+  return useQuery([useEntriesStatsKey, userId], () => EntryService.getEntriesStats(userId))
 }
 
 export {
