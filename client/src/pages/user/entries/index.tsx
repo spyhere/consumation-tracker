@@ -87,7 +87,7 @@ const Entries = () => {
     entryEdit.mutate({ id, body })
   }
 
-  const handleDateFilter = (_: unknown, data: any) => {
+  const handleDateFilter = (_: unknown, data: string[]) => {
     const [from, to] = data
     if (from && to) {
       setRange({ from, to })
