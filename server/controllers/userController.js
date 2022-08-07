@@ -6,8 +6,8 @@ const prisma = new PrismaClient()
 class UserController {
 
   static async index(req, res) {
-    const currentWeekEnd = new Date(Date.now() - 6 * 24 * 60 * 60 * 1000)
-    const lastWeekEnd = new Date(Date.now() - 13 * 24 * 60 * 60 * 1000)
+    const currentWeekStart = new Date(Date.now() - 6 * 24 * 60 * 60 * 1000)
+    const lastWeekStart = new Date(Date.now() - 13 * 24 * 60 * 60 * 1000)
 
     const [users, previousEntries] = await prisma.$transaction([
       prisma.user.findMany({
@@ -18,7 +18,7 @@ class UserController {
             where: {
               createdAt: {
                 lte: new Date(),
-                gte: currentWeekEnd,
+                gte: currentWeekStart,
               }
             }
           }
@@ -28,8 +28,8 @@ class UserController {
         by: ['user_id'],
         where: {
           createdAt: {
-            lte: currentWeekEnd,
-            gte: lastWeekEnd,
+            lte: currentWeekStart,
+            gte: lastWeekStart,
           }
         },
         _count: true
