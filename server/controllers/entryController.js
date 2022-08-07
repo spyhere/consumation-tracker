@@ -125,31 +125,47 @@ class EntryController {
     const { calories, food, price } = req.body
 
     const daytime = new Date().toISOString().split("T")[0]
-    const newEntry = await prisma.entry.create({
-      data: {
-        calories: Number(calories),
-        food,
-        price: Number(price) || 0,
-        User: {
-          connect: {
-            id: Number(user_id)
-          }
-        },
-        Day: {
-          connectOrCreate: {
-            where: {
-              daytime
-            },
-            create: {
-              daytime
-            }
-          }
-        },
-      },
-      include: {
-        Day: true
+    const day = await prisma.day.upsert({
+      where: { daytime },
+      update: {},
+      create: {
+        daytime
       }
     })
+    const [newEntry] = await prisma.$transaction([
+      prisma.entry.create({
+        data: {
+          calories: Number(calories),
+          food,
+          price: Number(price) || 0,
+          User: {
+            connect: {
+              id: Number(user_id)
+            }
+          },
+          Day: {
+            connect: {
+              id: day.id
+            }
+          },
+        },
+        include: {
+          Day: true
+        }
+      }),
+      prisma.user.update({
+        where: {
+          id: user_id
+        },
+        data: {
+          Day: {
+            connect: {
+              id: day.id
+            }
+          }
+        }
+      })
+    ])
 
     res.status(201).send({ data: newEntry })
   }
