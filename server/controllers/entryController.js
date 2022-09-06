@@ -96,7 +96,8 @@ class EntryController {
   static async store(req, res) {
     const hasErrors = createEntryRequest(req.body)
     if (!!hasErrors) {
-      return res.status(hasErrors[0]).send(hasErrors[1])
+      const [statusCode, errorMessage] = hasErrors
+      return res.status(statusCode).send(errorMessage)
     }
 
     const user_id = Number(req.params.user) || req.user.id
