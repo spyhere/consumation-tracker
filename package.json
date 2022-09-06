@@ -1,0 +1,28 @@
+{
+  "name": "consummation",
+  "version": "1.0.0",
+  "description": "### A test project to test out my skills.",
+  "scripts": {
+    "initialize": "npm i && cd server && npm i && cd ../client && npm i",
+    "env-create" : "mv server/.env.example server/.env && mv client/.env.example client/.env",
+    "migrate": "cd server && npx prisma migrate dev --name init",
+    "seed": "cd server && npx prisma migrate reset",
+    "app-server-start": "cd server && npm start",
+    "app-client-start": "cd client && npm start",
+    "start": "concurrently \"npm:app-*\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spyhere/consumation-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spyhere/consumation-tracker/issues"
+  },
+  "homepage": "https://github.com/spyhere/consumation-tracker#readme",
+  "devDependencies": {
+    "concurrently": "^7.3.0"
+  }
+}
