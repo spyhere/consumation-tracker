@@ -101,9 +101,9 @@ class EntryController {
     }
 
     const user_id = Number(req.params.user) || req.user.id
-    const { calories, food, price } = req.body
+    const { calories, food, price, time } = req.body
 
-    const daytime = new Date().toISOString().split("T")[0]
+    const daytime = time.split("T")[0] || new Date().toISOString().split("T")[0]
     const day = await prisma.day.upsert({
       where: { daytime },
       update: {},
