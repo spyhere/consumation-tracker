@@ -15,8 +15,8 @@ router.group("/admin", (router) => {
     router.get("/:user/entries/stats", EntryController.getStats)
     router.get("/:user/entries", EntryController.index)
     router.post("/:user/entries", EntryController.store)
-    router.delete("/entries/:entry", isAdminMiddleware, EntryController.destroy)
-    router.put("/entries/:entry", isAdminMiddleware, EntryController.update)
+    router.delete("/entries/:entry", EntryController.destroy)
+    router.put("/entries/:entry", EntryController.update)
   })
 })
 
