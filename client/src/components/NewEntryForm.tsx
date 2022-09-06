@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   Button,
+  DatePicker,
   Form,
   FormInstance,
   Input,
@@ -51,6 +52,13 @@ const NewEntryForm = ({ submitForm, onSubmitFail, form }: Props) => {
           name="price"
         >
           <Input type="number"/>
+        </Form.Item>
+
+        <Form.Item
+          label="time"
+          name="time"
+        >
+          <DatePicker mode="date" />
         </Form.Item>
 
 

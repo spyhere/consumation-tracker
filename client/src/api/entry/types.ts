@@ -21,4 +21,5 @@ export type EntryBodyT = {
   calories: number
   food: string
   price?: string
+  time?: string
 }

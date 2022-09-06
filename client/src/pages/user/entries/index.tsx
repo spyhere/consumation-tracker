@@ -76,7 +76,11 @@ const Entries = () => {
   }
 
   const submitForm = (values: EntryBodyT) => {
-    entryCreate.mutate({ body: values, userId })
+    const body = {
+      ...values,
+      time: (values.time as any).toDate().toISOString()
+    }
+    entryCreate.mutate({ body, userId })
   }
 
   const deleteEntry = (id: number) => {
