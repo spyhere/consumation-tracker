@@ -4,7 +4,7 @@
 
 `api` - api calls implementation that are performed in the app <br>
 `components` - common components <br>
-`context` - React contexts implementation <br>
+`contexts` - React contexts implementation <br>
 `enums` - Typescript enums directory <br>
 `guards` - Guards for React Router routes <br>
 `pages` - Components that are displayed by routes <br>
