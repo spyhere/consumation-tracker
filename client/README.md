@@ -9,7 +9,7 @@
 `guards` - Guards for React Router routes <br>
 `pages` - Components that are displayed by routes <br>
 `queries` - React Query hooks implementations <br>
-`resources` - Directory that contains different static info that is used throughout the app <br>
+`resources` - Directory that contains different static data that is used throughout the app <br>
 `routes` - Set of routes that are implemented on the client <br>
 
 
