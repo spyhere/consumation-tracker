@@ -4,8 +4,8 @@ import {
 } from "@tanstack/react-query"
 import EntryService from "api/entry"
 
-const useEntriesPaginatedKey = "entries-paginated"
-const useEntriesPaginated = (userId?: string) => {
+export const useEntriesPaginatedKey = "entries-paginated"
+export const useEntriesPaginated = (userId?: string) => {
   return useInfiniteQuery(
     [useEntriesPaginatedKey, userId],
     EntryService.getPaginatedEntries,
@@ -13,29 +13,15 @@ const useEntriesPaginated = (userId?: string) => {
   )
 }
 
-export {
-  useEntriesPaginatedKey,
-  useEntriesPaginated
-}
 
-
-const useEntriesByDatesKey = "entries-by-dates"
-const useEntriesByDates = (from: string, to: string, options?: Record<string, unknown>) => {
+export const useEntriesByDatesKey = "entries-by-dates"
+export const useEntriesByDates = (from: string, to: string, options?: Record<string, unknown>) => {
   return useQuery([useEntriesByDatesKey, { from, to }], () => EntryService.getEntriesByDates(from, to), options)
 }
 
-export {
-  useEntriesByDatesKey,
-  useEntriesByDates
-}
 
-
-const useEntriesStatsKey = 'entries-stats'
-const useEntriesStats = (userId?: string) => {
+export const useEntriesStatsKey = 'entries-stats'
+export const useEntriesStats = (userId?: string) => {
   return useQuery([useEntriesStatsKey, userId], () => EntryService.getEntriesStats(userId))
 }
 
-export {
-  useEntriesStatsKey,
-  useEntriesStats
-}
