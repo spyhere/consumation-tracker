@@ -22,12 +22,12 @@ For detailed structure description of each counterpart go to specified directory
 To run the app locally follow these steps:
 
 - run `npm run install-deps` to install all needed dependencies
-- run `npm env-create` to create `.env` files
+- run `npm run env-create` to create `.env` files
 - install and start `mysql`
 - create `database` and get url of it
 - inside `server` directory in `.env` file put db url to `DATABASE_URL`
-- run `npm migrate` for migration
-- run `npm seed` and press `Y` if/when prompted to seed db with fresh data
+- run `npm run migrate` for migration
+- run `npm run seed` and press `Y` if/when prompted to seed db with fresh data
 - run `npm start` to run the app
 - inside `client/src/resources/constants.ts` file you can comment and uncomment `JWT_TOKEN` keys to get `user`
   or `admin` roles
