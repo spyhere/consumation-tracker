@@ -32,6 +32,18 @@ To run the app locally follow these steps:
 - inside `client/src/resources/constants.ts` file you can comment and uncomment `JWT_TOKEN` keys to get `user`
   or `admin` roles
 
+## App flow
+
+### User:
+- Add new entries
+- Update existing entries
+- Delete existing entries
+- Filter entries by date
+
+### Admin:
+- Go to http://localhost:3000/admin/overview to watch users statistics
+- Go to user's profile and perform everything a user can do.
+
 ## Technologies & Libraries used
 
 ### Backend:
@@ -50,4 +62,5 @@ To run the app locally follow these steps:
 - Typescript
 - Axios
 - React Query
+- AntDesign
 
