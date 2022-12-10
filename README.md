@@ -21,7 +21,7 @@ For detailed structure description of each counterpart go to specified directory
 
 To run the app locally follow these steps:
 
-- run `npm initialize` to install all needed dependencies
+- run `npm run install-deps` to install all needed dependencies
 - run `npm env-create` to create `.env` files
 - install and start `mysql`
 - create `database` and get url of it

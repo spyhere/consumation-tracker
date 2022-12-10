@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "### A test project to test out my skills.",
   "scripts": {
-    "initialize": "npm i && cd server && npm i && cd ../client && npm i",
-    "env-create" : "mv server/.env.example server/.env && mv client/.env.example client/.env",
+    "install-deps": "npm i && cd server && npm i && cd ../client && npm i && echo All dependencies were installed",
+    "env-create": "mv server/.env.example server/.env && mv client/.env.example client/.env",
     "migrate": "cd server && npx prisma migrate dev --name init",
     "seed": "cd server && npx prisma migrate reset",
     "app-server-start": "cd server && npm start",
