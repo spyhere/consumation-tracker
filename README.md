@@ -23,9 +23,10 @@ To run the app locally follow these steps:
 
 - run `npm run install-deps` to install all needed dependencies
 - run `npm run env-create` to create `.env` files
-- install and start `mysql`
-- create `database` and get url of it
-- inside `server` directory in `.env` file put db url to `DATABASE_URL`
+- install and start `mysql` server
+- create a `database` with a name of your choice
+- inside `server` directory in `.env` file put all specified details in `DATABASE_URL`. For
+  ex: `mysql://root@localhost:3306/calories`
 - run `npm run migrate` for migration
 - run `npm run seed` and press `Y` if/when prompted to seed db with fresh data
 - run `npm start` to run the app
@@ -35,12 +36,14 @@ To run the app locally follow these steps:
 ## App flow
 
 ### User:
+
 - Add new entries
 - Update existing entries
 - Delete existing entries
 - Filter entries by date
 
 ### Admin:
+
 - Go to http://localhost:3000/admin/overview to watch users statistics
 - Go to user's profile and perform everything a user can do.
 
@@ -63,4 +66,3 @@ To run the app locally follow these steps:
 - Axios
 - React Query
 - AntDesign
-
