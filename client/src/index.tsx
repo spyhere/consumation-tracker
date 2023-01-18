@@ -6,6 +6,7 @@ import { QUERY_OPTIONS } from "resources/constants"
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const queryClient = new QueryClient(QUERY_OPTIONS)
 
@@ -18,6 +19,7 @@ root.render(
       <BrowserRouter>
         <App/>
       </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false}/>
     </QueryClientProvider>
   </React.StrictMode>
 )
