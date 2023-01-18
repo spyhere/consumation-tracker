@@ -4,7 +4,7 @@ import { USER_TOKEN } from "resources/constants"
 
 const apiClient = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     "Content-Type": "application/json",
   }
