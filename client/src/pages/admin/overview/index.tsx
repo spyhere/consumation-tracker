@@ -17,12 +17,12 @@ import UserCard from "components/UserCard"
 
 const AdminOverview = () => {
   const { pathname } = useLocation()
-  const { data: usersData, isLoading: isLoadingUsers } = useUsersStats()
+  const { data: usersData, isLoading: isLoadingUsers, isFetching } = useUsersStats()
 
   const { data: users } = usersData || {}
 
   return (
-    <Spin spinning={isLoadingUsers}>
+    <Spin spinning={isLoadingUsers || isFetching}>
       <PageHeader>
         <Typography.Title level={3}>Users Overview</Typography.Title>
       </PageHeader>

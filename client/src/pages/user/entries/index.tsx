@@ -50,7 +50,7 @@ const Entries = () => {
     data: entriesByDatesData,
     isFetching: isFetchingEntryByDates
   } = useEntriesByDates(from!, to!, { enabled: !!from || !!to })
-  const { data: entriesStats, isLoading: isLoadingStats } = useEntriesStats(userId)
+  const { data: entriesStats, isLoading: isLoadingStats, isFetching: isFetchingStats } = useEntriesStats(userId)
   const entryCreate = useMutation(EntryService.createEntry, {
     onSuccess: () => {
       form.resetFields()
@@ -106,7 +106,7 @@ const Entries = () => {
 
   return (
     <StateContextProvider defaultValue={{ deleteEntry, editEntry }}>
-      <Spin spinning={isLoadingStats || isLoadingEntries || isFetchingEntryByDates}>
+      <Spin spinning={isLoadingStats || isLoadingEntries || isFetchingStats || isFetchingEntryByDates}>
         <PageHeader>
           <Space direction="vertical">
             {userId && (
