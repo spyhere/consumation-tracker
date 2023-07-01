@@ -189,7 +189,11 @@ class EntryController {
 
   static async getStats(req, res) {
     const userId = Number(req.params.user) || req.user.id
-    const monthStart = new Date(new Date().setDate(1))
+    const monthStart = new Date(
+        new Date(
+            new Date().setDate(1)
+        ).setHours(0, 0, 0, 0)
+    )
     const dayStart = new Date(new Date().setHours(0, 0, 0, 0))
 
     const [monthMoneySpent, dayCalories] = await prisma.$transaction([
