@@ -6,7 +6,7 @@ import {
   useParams
 } from "react-router-dom"
 import {
-  useEntriesByDates,
+  useEntriesByDates, useEntriesByDatesKey,
   useEntriesPaginated,
   useEntriesPaginatedKey,
   useEntriesStats,
@@ -55,18 +55,21 @@ const Entries = () => {
     onSuccess: () => {
       form.resetFields()
       queryClient.invalidateQueries([useEntriesPaginatedKey])
+      queryClient.invalidateQueries([useEntriesByDatesKey])
       queryClient.invalidateQueries([useEntriesStatsKey])
     }
   })
   const entryDelete = useMutation(EntryService.deleteEntry, {
     onSuccess: () => {
       queryClient.invalidateQueries([useEntriesPaginatedKey])
+      queryClient.invalidateQueries([useEntriesByDatesKey])
       queryClient.invalidateQueries([useEntriesStatsKey])
     }
   })
   const entryEdit = useMutation(EntryService.editEntry, {
     onSuccess: () => {
       queryClient.invalidateQueries([useEntriesPaginatedKey])
+      queryClient.invalidateQueries([useEntriesByDatesKey])
       queryClient.invalidateQueries([useEntriesStatsKey])
     }
   })
