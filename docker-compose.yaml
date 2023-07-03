@@ -1,0 +1,29 @@
+services:
+  client:
+    build: ./client
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client/:/app
+    environment:
+      REACT_APP_BASE_URL: http://localhost:8080
+
+  server:
+    build: ./server
+    ports:
+      - 8080:8080
+    volumes:
+      - ./server:/app
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - mysql-volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: calories
+
+volumes:
+  mysql-volume:
