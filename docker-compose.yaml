@@ -1,8 +1,9 @@
+version: "2.18"
 services:
   client:
     build: ./client
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
       - ./client/:/app
     environment:
@@ -11,7 +12,7 @@ services:
   server:
     build: ./server
     ports:
-      - 8080:8080
+      - "8080:8080"
     volumes:
       - ./server:/app
     depends_on:
