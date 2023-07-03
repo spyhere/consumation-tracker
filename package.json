@@ -23,9 +23,6 @@
   },
   "homepage": "https://github.com/spyhere/consumation-tracker#readme",
   "devDependencies": {
-    "concurrently": "^7.3.0"
-  },
-  "dependencies": {
-    "@tanstack/react-query-devtools": "^4.22.0"
+    "concurrently": "^8.2.0"
   }
 }
